@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 01:40:06 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/17 01:44:18 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void solve_cubic(t_c *cub, t_res *res)
 	{
 		printf("1 REAL ROOT AND 2 COMPLEX\n");
 		float r = -(g/2) + pow(h, 0.5f);
-		float s = pow(r, 1.0f/3.0f);
+		float s = -pow(-r, 1.0f/3.0f);
 		float t = -(g / 2) - pow(h, 0.5f);
 		float u = -pow(-t, 1.0f/3.0f);
 		res->x1 = (s + u) - (cub->b / (3 * cub->a));
