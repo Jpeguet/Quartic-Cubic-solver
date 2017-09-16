@@ -1,12 +1,12 @@
 NAME = quartic
+NAMEC = cubic
 
 all:
-	gcc -o $(NAME) $(NAME).c
+	@gcc -o $(NAME) $(NAME).c
+	@gcc -o $(NAMEC) $(NAMEC).c
 
-clean:
-	rm $(NAME).o
-
-fclean: clean
-	rm $(NAME)
+fclean:
+	@rm $(NAME)
+	@rm $(NAMEC)
 
 re: fclean all
