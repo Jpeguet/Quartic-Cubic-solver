@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 01:30:31 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/17 01:40:06 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ void solve_cubic(t_c *cub, t_res *res)
 		res->x1 = (s + u) - (cub->b / (3 * cub->a));
 		res->real = (-(s + u))/2 - (cub->b / (3 * cub->a));
 		res->imag = (s - u) * (pow(3.0, 0.5f)/2);
-		printf("r = %f\ns= %f\nt = %f\nu = %f\n\n\nx1 = %f\nreal = %f\nimag = %f\n\n", r,s,t,u,res->x1,res->real,res->imag);
+		printf("r = %f\ns= %f\nt = %f\nu = %f\n\nreal = %f\nimag = %f\n\nx1 = %f\n", r,s,t,u,res->real,res->imag,res->x1);
+		printf("x2 = %f - i * %f\nx3 = %f + i * %f\n", res->real, res->imag, res->real, res->imag);
 	}
 }
 
