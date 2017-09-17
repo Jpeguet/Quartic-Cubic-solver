@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 02:14:58 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/17 02:43:25 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void solve_cubic(t_c *cub, t_res *res)
 		float j = pow(i, (float)1/3);
 		float k = acos((float)(-(g / (2.0 * i))));
 		float l = -j;
-		float m = cos(k/3.0f);
+		float m = cos(k/3.0);
 		float n = sqrt(3.0) * sin(k/3);
 		float p = -(cub->b / (3 * cub->a));
-		res->x1 = (2 * j) * cos(k / 3.0f) - (cub->b / (3 * cub->a));
+		res->x1 = (2 * j) * cos(k / 3.0) - (cub->b / (3 * cub->a));
 		res->x2 = l * (m + n) + p;
 		res->x3 = l * (m - n) + p;
 		printf("i = %f\nj= %f\nk = %f\nl = %f\nm = %f\nn = %f\np = %f\n\n", i,j,k,l,m,n,p);
@@ -112,16 +112,17 @@ void solve_cubic(t_c *cub, t_res *res)
 	else if(h > 0)
 	{
 		printf("1 REAL ROOT AND 2 COMPLEX\n");
-		float r = -(g/2) + pow(h, 0.5f);
+		float r = -(g/2) + pow(h, 0.5);
 		float s = pow(fabs(r), 0.3333);
-		float t = -(g / 2) - pow(h, 0.5f);
+		float t = -(g / 2) - pow(h, 0.5);
 		float u = pow(fabs(t), 0.3333);
 		s = r < 0 ? -s : s;
 		u = t < 0 ? -u : u;
 		res->x1 = (s + u) - (cub->b / (3 * cub->a));
 		res->real = (-(s + u))/2 - (cub->b / (3 * cub->a));
-		res->imag = (s - u) * (pow(3.0, 0.5f)/2);
-		printf("r = %f\ns= %f\nt = %f\nu = %f\nx1 = %f\nreal = %f\nimag = %f\n\n", r,s,t,u,res->x1,res->real,res->imag);
+		res->imag = (s - u) * (pow(3.0, 0.50)/2);
+		printf("r = %f\ns= %f\nt = %f\nu = %f\n\nreal = %f\nimag = %f\n\nx1 = %f\n", r,s,t,u,res->real,res->imag,res->x1);
+		printf("x2 = %f - i * %f\nx3 = %f + i * %f\n", res->real, res->imag, res->real, res->imag);
 	}
 	printf("Cubic solved\n\n");
 }
@@ -150,7 +151,7 @@ void select_non_zero(t_res res, float *p, float *q)
 
 void solve_quartic(t_c *c, t_res *roots)
 {
-	t_res cub_roots;
+	t_res cub_roots = (t_res){0,0,0,0,0,0};
 	float f,g,h,p,q,r,s;
 
 	printf("Quartic solving \na = %f b = %f c = %f d =  %f e = %f \n\n", c->a, c->b, c->c, c->d, c->e);
@@ -165,7 +166,13 @@ void solve_quartic(t_c *c, t_res *roots)
 	t_c cub = (t_c){1, f / 2, ((f * f - 4 * h) / 16), ((-g * -g) / 64), 0};
 	solve_cubic(&cub, &cub_roots);
 
-	select_non_zero(cub_roots, &p, &q);
+	if(!cub_roots.imag && !cub_roots.real)
+		select_non_zero(cub_roots, &p, &q);
+	else
+		{
+			printf("complex quartic detected\ncomplex sqrt needed ->todolist\n");
+			exit(1);
+		}
 	printf("p = %f, q = %f\n", p, q);
 
 	r = -g / (8 * p * q);

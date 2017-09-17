@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 02:09:58 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/17 02:32:40 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ void solve_cubic(t_c *cub, t_res *res)
 		float j = pow(i, (float)1/3);
 		float k = acos((float)(-(g / (2.0 * i))));
 		float l = -j;
-		float m = cos(k/3.0f);
+		float m = cos(k/3.0);
 		float n = sqrt(3.0) * sin(k/3);
 		float p = -(cub->b / (3 * cub->a));
-		res->x1 = (2 * j) * cos(k / 3.0f) - (cub->b / (3 * cub->a));
+		res->x1 = (2 * j) * cos(k / 3.0) - (cub->b / (3.0 * cub->a));
 		res->x2 = l * (m + n) + p;
 		res->x3 = l * (m - n) + p;
 		printf("i = %f\nj= %f\nk = %f\nl = %f\nm = %f\nn = %f\np = %f\n\n", i,j,k,l,m,n,p);
@@ -98,15 +98,15 @@ void solve_cubic(t_c *cub, t_res *res)
 	else if(h > 0)
 	{
 		printf("1 REAL ROOT AND 2 COMPLEX\n");
-		float r = -(g/2) + pow(h, 0.5f);
+		float r = -(g/2) + pow(h, 0.5);
 		float s = pow(fabs(r), 0.3333);
-		float t = -(g / 2) - pow(h, 0.5f);
+		float t = -(g / 2) - pow(h, 0.5);
 		float u = pow(fabs(t), 0.3333);
 		s = r < 0 ? -s : s;
 		u = t < 0 ? -u : u;
 		res->x1 = (s + u) - (cub->b / (3 * cub->a));
 		res->real = (-(s + u))/2 - (cub->b / (3 * cub->a));
-		res->imag = (s - u) * (pow(3.0, 0.5f)/2);
+		res->imag = (s - u) * (pow(3.0, 0.5)/2);
 		printf("r = %f\ns= %f\nt = %f\nu = %f\n\nreal = %f\nimag = %f\n\nx1 = %f\n", r,s,t,u,res->real,res->imag,res->x1);
 		printf("x2 = %f - i * %f\nx3 = %f + i * %f\n", res->real, res->imag, res->real, res->imag);
 	}
