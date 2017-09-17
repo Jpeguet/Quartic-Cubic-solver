@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 01:44:18 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/17 02:09:58 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ void solve_cubic(t_c *cub, t_res *res)
 	float f,g,h;
 	printf("Cubic solving \na = %f b= %f c = %f d= %f\n\n", cub->a, cub->b, cub->c, cub->d);
 
+	if(!cub->a)
+	{
+		printf("2nd degree equation detected..\n");
+		return;
+	}
 	f = ((3 * cub->c / cub->a) - (pw(cub->b,2)/pw(cub->a,2))) / 3;
 	g = ((2 * pw(cub->b,3) / pw(cub->a, 3)) - (9 * cub->b * cub->c / pw(cub->a,2)) + (27 * cub->d / cub->a)) / 27;
 	h = (pw(g,2)/4) + (pw(f,3) / 27);
@@ -87,16 +92,18 @@ void solve_cubic(t_c *cub, t_res *res)
 	else if (!h && !g && !f)
 	{
 		printf("3 ROOTS ARE ==\n");
-		res->x1 = -pow((cub->d / cub->a), 1.0f/3.0f);
+		res->x1 = -pow((cub->d / cub->a), (float)0.3333);
 		printf("x1 = x2 = x3 = %f \n\n", res->x1);
 	}
 	else if(h > 0)
 	{
 		printf("1 REAL ROOT AND 2 COMPLEX\n");
 		float r = -(g/2) + pow(h, 0.5f);
-		float s = -pow(-r, 1.0f/3.0f);
+		float s = pow(fabs(r), 0.3333);
 		float t = -(g / 2) - pow(h, 0.5f);
-		float u = -pow(-t, 1.0f/3.0f);
+		float u = pow(fabs(t), 0.3333);
+		s = r < 0 ? -s : s;
+		u = t < 0 ? -u : u;
 		res->x1 = (s + u) - (cub->b / (3 * cub->a));
 		res->real = (-(s + u))/2 - (cub->b / (3 * cub->a));
 		res->imag = (s - u) * (pow(3.0, 0.5f)/2);
