@@ -6,7 +6,7 @@
 /*   By: jpeg <jpeg@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/14 20:25:59 by jpeg              #+#    #+#             */
-/*   Updated: 2017/09/17 02:43:25 by jpeg             ###   ########.fr       */
+/*   Updated: 2017/09/19 02:08:19 by jpeg             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,20 @@ void solve_quartic(t_c *c, t_res *roots)
 	else
 		{
 			printf("complex quartic detected\ncomplex sqrt needed ->todolist\n");
+			float r = sqrt(pw(cub_roots.real,2) + pw(cub_roots.imag,2));
+			float y = sqrt((r - cub_roots.real) / 2);
+			float x = cub_roots.imag / (2 * y);
+			float root1_r = x;
+			float root2_i = y;
+			printf("q = %f + %fi\n r = %f - %fi\n", x,y,x,y);
+			float pq = (x * x) - (y * -y);
+			printf("p * q = %f\n", pq);
+			float re = -g/(8*pq);
+			float se = c->b / (4 * c->a);
+			printf("re = %f\nse = %f\n", re,se);
+			roots->x1 = 2 * x + re - se;
+			roots->x2 = -2 * x + re -se;
+			printf("x1 = %f\nx2 = %f\n", roots->x1, roots->x2);
 			exit(1);
 		}
 	printf("p = %f, q = %f\n", p, q);
